@@ -19,3 +19,6 @@
 .vscode
 .idea
 server
+
+# Local database
+.db
