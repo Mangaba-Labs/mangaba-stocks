@@ -1,12 +1,12 @@
 package main
 
 import (
+	"github.com/Mangaba-Labs/mangaba-stocks.git/database"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/cli"
-	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/storage"
 )
 
 func main() {
-	storage.SetupDatabase()
+	database.SetupDatabase()
 	cli.StartApp()
-	defer storage.Instance.Close()
+	defer database.Instance.Close()
 }
