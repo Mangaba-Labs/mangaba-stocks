@@ -8,3 +8,7 @@ type Share struct {
 	BuyValue    float64
 	NowValue    float64
 }
+
+// RespponseHG getHG response
+type ResponseHG struct {
+}

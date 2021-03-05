@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 
+	"github.com/Mangaba-Labs/mangaba-stocks.git/database"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/model"
 )
 
@@ -24,15 +25,15 @@ func (r Repository) GetAll() []model.Share {
 }
 
 // InsertShare add a new share
-func (r Repository) InsertShare(name string) error {
-	// statement, err := database.Instance.Prepare("INSERT INTO shares (company_name, name, buy_value, now_value) VALUES (?, ?, ?, ?)")
-	// if err != nil {
-	// 	return err
-	// }
-	// _, err = statement.Exec(share.CompanyName, share.Name, share.BuyValue, share.NowValue)
-	// if err != nil {
-	// 	return err
-	// }
+func (r Repository) InsertShare(share model.Share) error {
+	statement, err := database.Instance.Prepare("INSERT INTO shares (company_name, name, buy_value, now_value) VALUES (?, ?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(share.CompanyName, share.Name, share.BuyValue, share.NowValue)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

@@ -1,11 +1,13 @@
 package services
 
 import (
+	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/model"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/repository"
 )
 
 // StockService interface
 type StockService interface {
+	AddShare(share model.Share) error
 }
 
 // NewStockService repository sqlite implementation
