@@ -9,7 +9,7 @@ import (
 // StockRepository Contract
 type StockRepository interface {
 	GetAll() []model.Share
-	InsertShare(share model.Share) error
+	InsertShare(share model.Share) (model.Share, error)
 	RemoveShare(id int) error
 }
 

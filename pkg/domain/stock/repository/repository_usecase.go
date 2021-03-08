@@ -18,23 +18,23 @@ func (r Repository) GetAll() []model.Share {
 	shares := []model.Share{}
 	tempShare := model.Share{}
 	for rows.Next() {
-		rows.Scan(&tempShare.ID, &tempShare.CompanyName, &tempShare.Name, &tempShare.BuyValue, &tempShare.NowValue)
+		rows.Scan(&tempShare.ID, &tempShare.CompanyName, &tempShare.Symbol, &tempShare.BuyValue, &tempShare.NowValue)
 		shares = append(shares, tempShare)
 	}
 	return shares
 }
 
 // InsertShare add a new share
-func (r Repository) InsertShare(share model.Share) error {
+func (r Repository) InsertShare(share model.Share) (model.Share, error) {
 	statement, err := database.Instance.Prepare("INSERT INTO shares (company_name, name, buy_value, now_value) VALUES (?, ?, ?, ?)")
 	if err != nil {
-		return err
+		return share, err
 	}
-	_, err = statement.Exec(share.CompanyName, share.Name, share.BuyValue, share.NowValue)
+	_, err = statement.Exec(share.CompanyName, share.Symbol, share.BuyValue, share.NowValue)
 	if err != nil {
-		return err
+		return share, err
 	}
-	return nil
+	return share, nil
 }
 
 // RemoveShare delete share from database
