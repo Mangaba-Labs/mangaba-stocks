@@ -13,7 +13,7 @@ import (
 
 // Service struct
 type Service struct {
-	Repository repository.StockRepository
+	Repository repository.Repository
 }
 
 // AddShare take the actual value from the Share and send a share to repo
@@ -50,5 +50,17 @@ func (s *Service) UpdateShares(shares []model.Share) ([]model.Share, error) {
 	// for i := 0; i < len(shares); i++ {
 	// 	s.AddShare(shares[i])
 	// }
+	return shares, nil
+}
+
+// GetAll registers in database
+func (s *Service) GetAll() ([]model.Share, error) {
+	shares, err := s.Repository.GetAll()
+
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
 	return shares, nil
 }

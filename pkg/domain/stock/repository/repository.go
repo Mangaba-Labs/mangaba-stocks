@@ -8,14 +8,12 @@ import (
 
 // StockRepository Contract
 type StockRepository interface {
-	GetAll() []model.Share
+	GetAll() ([]model.Share, error)
 	InsertShare(share model.Share) (model.Share, error)
 	RemoveShare(id int) error
 }
 
 // NewStockRepository repository sqlite implementation
 func NewStockRepository(db *sql.DB) StockRepository {
-	return &Repository{
-		db: db,
-	}
+	return &Repository{}
 }

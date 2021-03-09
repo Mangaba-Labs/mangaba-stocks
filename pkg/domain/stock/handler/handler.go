@@ -8,6 +8,7 @@ import (
 // StockHandler interface
 type StockHandler interface {
 	CreateShare(share model.Share) error
+	GetAll() ([]model.Share, error)
 }
 
 // NewStockHandler pointer to handler implementation

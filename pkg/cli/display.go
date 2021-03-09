@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/handler"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/model"
 	"github.com/gookit/color"
 )
@@ -14,7 +15,14 @@ var shares []model.Share
 
 // StartApp entry point to the application
 func StartApp() {
-	// shares = stock.GetAllShares()
+	var stockHandler = new(handler.Handler)
+
+	shares, err := stockHandler.GetAll()
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	displayDashboard(shares)
 	menu()
 }
@@ -78,7 +86,7 @@ func menu() {
 	fmt.Printf("\n")
 	for {
 		fmt.Println("1- Add share    \t2- Remove Share")
-		fmt.Println("3- Refresh      \t4- Quit")
+		fmt.Println("3- Quit")
 		var cmd int
 		fmt.Scanf("%d", &cmd)
 
@@ -89,8 +97,6 @@ func menu() {
 			// shares = stock.GetAllShares()
 			displayDashboard(shares)
 		} else if cmd == 3 {
-			displayDashboard(shares)
-		} else if cmd == 4 {
 			quit()
 		} else {
 			fmt.Println("Huh? Invalid option")

@@ -1,27 +1,26 @@
 package repository
 
 import (
-	"database/sql"
-
 	"github.com/Mangaba-Labs/mangaba-stocks.git/database"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/model"
 )
 
 // Repository concrete type
-type Repository struct {
-	db *sql.DB
-}
+type Repository struct{}
 
 // GetAll get all shares in db
-func (r Repository) GetAll() []model.Share {
-	rows, _ := r.db.Query("SELECT id, company_name, name, buy_value, now_value FROM shares")
+func (r Repository) GetAll() ([]model.Share, error) {
+	rows, err := database.Instance.Query("SELECT id, company_name, name, buy_value, now_value FROM shares")
+	if err != nil {
+		return nil, err
+	}
 	shares := []model.Share{}
 	tempShare := model.Share{}
 	for rows.Next() {
 		rows.Scan(&tempShare.ID, &tempShare.CompanyName, &tempShare.Symbol, &tempShare.BuyValue, &tempShare.NowValue)
 		shares = append(shares, tempShare)
 	}
-	return shares
+	return shares, nil
 }
 
 // InsertShare add a new share
@@ -39,7 +38,7 @@ func (r Repository) InsertShare(share model.Share) (model.Share, error) {
 
 // RemoveShare delete share from database
 func (r Repository) RemoveShare(id int) error {
-	statement, err := r.db.Prepare("DELETE FROM shares WHERE id = (?)")
+	statement, err := database.Instance.Prepare("DELETE FROM shares WHERE id = (?)")
 
 	if err != nil {
 		return err

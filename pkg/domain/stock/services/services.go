@@ -8,6 +8,7 @@ import (
 // StockService interface
 type StockService interface {
 	AddShare(share model.Share) (model.Share, error)
+	GetAll() ([]model.Share, error)
 	UpdateShares(shares []model.Share) ([]model.Share, error)
 }
 
