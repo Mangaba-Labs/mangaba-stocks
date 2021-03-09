@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -18,14 +19,21 @@ func addShare() {
 	fmt.Println("Buy price(float):")
 	fmt.Scanf("%f", &share.BuyValue)
 	share.Symbol = strings.ToUpper(share.Symbol)
-	stockHandler.CreateShare(share)
+	err := stockHandler.CreateShare(share)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+	clear()
+	StartApp()
 }
 
 func removeShare() {
+	var stockHandler = new(handler.Handler)
 	var id int
 	fmt.Println("Which share do u want remove? (ID):")
 	fmt.Scanf("%d", &id)
-	// stock.RemoveShare(id)
+	stockHandler.Remove(id)
 }
 
 func quit() {

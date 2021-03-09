@@ -16,11 +16,17 @@ var shares []model.Share
 // StartApp entry point to the application
 func StartApp() {
 	var stockHandler = new(handler.Handler)
+	stockHandler.UpdateAll()
+	display()
+	menu()
+}
+
+func display() {
+	var stockHandler = new(handler.Handler)
 
 	shares, err := stockHandler.GetAll()
 
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	displayDashboard(shares)
@@ -32,7 +38,7 @@ func displayDashboard(shares []model.Share) {
 	baseColor := "#bf5af2" // ID            Company Name             Share Name   Price   Price Actual
 	color.HEX(baseColor).Println("##############################################################################")
 	color.HEX(baseColor).Println("#        #                                  #          #          #          #")
-	color.HEX(baseColor).Println("#   ID   #           Company Name           #   Name   #  Price   #    Now   #")
+	color.HEX(baseColor).Println("#   ID   #           Company Name           #   Name   #   Buy    #    Now   #")
 	color.HEX(baseColor).Println("#        #                                  #          #          #          #")
 	color.HEX(baseColor).Println("##############################################################################")
 
@@ -52,7 +58,11 @@ func displayDashboard(shares []model.Share) {
 			fmt.Printf("   %d    ", shares[i].ID)
 		}
 		color.HEX(baseColor).Printf("#")
-		fmt.Printf("%s%s%s", companySides, shares[i].CompanyName, companySides)
+		if len(shares[i].CompanyName)%2 == 0 {
+			fmt.Printf("%s%s%s", companySides, shares[i].CompanyName, companySides)
+		} else {
+			fmt.Printf("%s%s %s", companySides, shares[i].CompanyName, companySides)
+		}
 		color.HEX(baseColor).Printf("#")
 		if len(shares[i].Symbol)%2 == 0 {
 			fmt.Printf("%s%s%s", nameSides, shares[i].Symbol, nameSides)
@@ -94,12 +104,11 @@ func menu() {
 			addShare()
 		} else if cmd == 2 {
 			removeShare()
-			// shares = stock.GetAllShares()
-			displayDashboard(shares)
+			display()
 		} else if cmd == 3 {
 			quit()
 		} else {
-			fmt.Println("Huh? Invalid option")
+			fmt.Printf("Huh %d? Invalid option\n", cmd)
 		}
 	}
 }
