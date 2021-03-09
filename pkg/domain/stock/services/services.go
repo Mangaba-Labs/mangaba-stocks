@@ -10,6 +10,7 @@ type StockService interface {
 	AddShare(share model.Share) (model.Share, error)
 	GetAll() ([]model.Share, error)
 	UpdateShares(shares []model.Share) ([]model.Share, error)
+	Remove(id int) error
 }
 
 // NewStockService repository sqlite implementation

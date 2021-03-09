@@ -11,6 +11,7 @@ type StockRepository interface {
 	GetAll() ([]model.Share, error)
 	InsertShare(share model.Share) (model.Share, error)
 	RemoveShare(id int) error
+	UpdateValue(share model.Share) error
 }
 
 // NewStockRepository repository sqlite implementation

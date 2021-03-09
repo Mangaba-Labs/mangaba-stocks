@@ -9,6 +9,8 @@ import (
 type StockHandler interface {
 	CreateShare(share model.Share) error
 	GetAll() ([]model.Share, error)
+	UpdateAll() error
+	Remove(id int) error
 }
 
 // NewStockHandler pointer to handler implementation

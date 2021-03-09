@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"log"
+
 	"github.com/Mangaba-Labs/mangaba-stocks.git/database"
 	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/stock/model"
 )
@@ -49,5 +51,24 @@ func (r Repository) RemoveShare(id int) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+// UpdateValue update de now_value of a share
+func (r Repository) UpdateValue(share model.Share) error {
+	statement, err := database.Instance.Prepare("UPDATE shares SET now_value = ? WHERE id = ?")
+
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+
+	_, err = statement.Exec(share.NowValue, share.ID)
+
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+
 	return nil
 }
