@@ -1,17 +1,14 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/storage"
+	"github.com/Mangaba-Labs/mangaba-stocks.git/database"
+	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/cli"
+	"github.com/Mangaba-Labs/mangaba-stocks.git/pkg/domain/config"
 )
 
 func main() {
-	shares := []storage.Share{}
-	storage.SetupDatabase()
-	shares = storage.GetAllShares()
-	// cli.StartApp()
-	fmt.Println(shares)
-
-	defer storage.Instance.Close()
+	config.SetupEnvVars()
+	database.SetupDatabase()
+	cli.StartApp()
+	defer database.Instance.Close()
 }
